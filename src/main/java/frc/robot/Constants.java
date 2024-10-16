@@ -25,6 +25,11 @@ public final class Constants {
 
   public static class SwerveModuleConstants {
 
+    // helpful constant: max linear velocity is around 3.81 meters / second
+    // https://www.reca.lc/drive
+
+    // (we will do real sys id on comp bot hopefully)
+
     // Front left
     public static final int VELOCITY_MOTOR_ID_FL;
     public static final int ANGULAR_MOTOR_ID_FL;

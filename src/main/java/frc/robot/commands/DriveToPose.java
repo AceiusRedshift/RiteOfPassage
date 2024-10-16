@@ -42,11 +42,13 @@ public class DriveToPose extends Command {
                 rPidController.calculate(currentPose.getRotation().getRadians(),
                         targetPose.getRotation().getRadians()));
 
+
         drivetrain.setSpeeds(speeds);
     }
 
     @Override
     public boolean isFinished() {
+        // MICHAEL: currently there is 0 tollerance for reaching setpoint (it will prob never reach it). you can add tollerances to PID
         return xPidController.atSetpoint() && yPidController.atSetpoint() && rPidController.atSetpoint();
     }
 
