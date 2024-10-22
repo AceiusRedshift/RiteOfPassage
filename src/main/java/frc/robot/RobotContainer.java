@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDriveCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -24,17 +23,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  // MICHAEL: not a important thing, but although the example uses hungarian notation
-  //  I suggest changing it to not since I don't think it has a purpose with modern ide's
-  // and i don't think we could reasonably expect everyone to follow it. 
-
-  private final Drivetrain m_drivetrain = new Drivetrain();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController = new CommandXboxController(
+  private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+  private final Drivetrain drivetrain = new Drivetrain();
+  private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
 
   /**
@@ -60,6 +51,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // TODO: Rewrite all this
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
     // .onTrue(new TeleopDriveCommand(m_exampleSubsystem, m_driverController));
@@ -69,14 +62,18 @@ public class RobotContainer {
     // // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    // MICHALE: This setpoint means that TelopDrive will only left or write stick is pressed down. Normally we use
+    // MICHALE: This setpoint means that TelopDrive will only left or write stick is
+    // pressed down. Normally we use
     // m_drivetrain.setDefaultCommand()
 
-    // should clarify that in xbox controller left stick is a button that you can press down on to click,
+    // should clarify that in xbox controller left stick is a button that you can
+    // press down on to click,
     // which is refered to here, not just that left stick is being used
 
-    m_driverController.leftStick().whileTrue(new TeleopDriveCommand(m_drivetrain, m_driverController));
-    m_driverController.rightStick().whileTrue(new TeleopDriveCommand(m_drivetrain, m_driverController));
+    // driverController.leftStick().whileTrue(new TeleopDriveCommand(drivetrain,
+    // driverController));
+    // driverController.rightStick().whileTrue(new TeleopDriveCommand(drivetrain,
+    // driverController));
   }
 
   /**
@@ -86,6 +83,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(exampleSubsystem);
   }
 }
