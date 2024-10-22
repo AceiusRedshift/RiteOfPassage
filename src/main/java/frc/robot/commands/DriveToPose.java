@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveToPose extends Command {
@@ -30,7 +31,9 @@ public class DriveToPose extends Command {
      */
     @Override
     public void initialize() {
-
+        xPidController.setTolerance(SwerveModuleConstants.POSITION_TOLERANCE_METERS);
+        yPidController.setTolerance(SwerveModuleConstants.POSITION_TOLERANCE_METERS);
+        rPidController.setTolerance(SwerveModuleConstants.ANGLE_TOLERANCE_RADIANS);
     }
 
     @Override
@@ -42,13 +45,11 @@ public class DriveToPose extends Command {
                 rPidController.calculate(currentPose.getRotation().getRadians(),
                         targetPose.getRotation().getRadians()));
 
-
         drivetrain.setSpeeds(speeds);
     }
 
     @Override
     public boolean isFinished() {
-        // MICHAEL: currently there is 0 tollerance for reaching setpoint (it will prob never reach it). you can add tollerances to PID
         return xPidController.atSetpoint() && yPidController.atSetpoint() && rPidController.atSetpoint();
     }
 

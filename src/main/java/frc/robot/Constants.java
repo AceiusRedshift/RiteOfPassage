@@ -60,6 +60,9 @@ public final class Constants {
     public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(4);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER_METERS * Math.PI;
 
+    public static final double POSITION_TOLERANCE_METERS = Units.inchesToMeters(6);
+    public static final double ANGLE_TOLERANCE_RADIANS = Units.degreesToRadians(4);
+
     static {
       // Front Left
       VELOCITY_MOTOR_ID_FL = 2;
