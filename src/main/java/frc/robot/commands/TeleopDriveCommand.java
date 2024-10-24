@@ -31,7 +31,7 @@ public class TeleopDriveCommand extends Command {
         if (fieldRelative) {
 
         } else {
-            drivetrain.setCurrentSpeeds(
+            drivetrain.setSpeeds(
                     new ChassisSpeeds(controller.getLeftX(), controller.getRightX(), controller.getRightX()));
         }
 
@@ -74,7 +74,7 @@ public class TeleopDriveCommand extends Command {
         // rotation speed from controller to make nicer driver exsperence (better
         // control at low speeds, quick ramp to fast speeds)
 
-        drivetrain.setCurrentSpeeds(
+        drivetrain.setSpeeds(
                 new ChassisSpeeds(controller.getLeftX(), controller.getRightX(), controller.getRightX()));
     }
 
