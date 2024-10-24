@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
 public class TeleopDriveCommand extends Command {
@@ -74,15 +75,15 @@ public class TeleopDriveCommand extends Command {
         // rotation speed from controller to make nicer driver exsperence (better
         // control at low speeds, quick ramp to fast speeds)
 
-        drivetrain.setSpeeds(
-                new ChassisSpeeds(controller.getLeftX(), controller.getRightX(), controller.getRightX()));
+        drivetrain.setSpeeds(new ChassisSpeeds(
+                controller.getLeftX() * Constants.SwerveModuleConstants.MAX_SPEED_MS,
+                controller.getLeftY() * Constants.SwerveModuleConstants.MAX_SPEED_MS,
+                controller.getRightX() * Constants.SwerveModuleConstants.MAX_SPEED_MS));
     }
 
     @Override
     public boolean isFinished() {
-        // Michael: returning true here means isFinished causes the command to run for
-        // only one execute cycle then stop
-        return true;
+        return false;
     }
 
     /**

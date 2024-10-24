@@ -63,6 +63,8 @@ public final class Constants {
     public static final double POSITION_TOLERANCE_METERS = Units.inchesToMeters(6);
     public static final double ANGLE_TOLERANCE_RADIANS = Units.degreesToRadians(4);
 
+    public static final double MAX_SPEED_MS = 2;
+
     static {
       // Front Left
       VELOCITY_MOTOR_ID_FL = 2;

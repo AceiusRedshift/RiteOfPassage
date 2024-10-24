@@ -82,29 +82,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // TODO: Rewrite all this
-
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    // .onTrue(new TeleopDriveCommand(m_exampleSubsystem, m_driverController));
-
-    // // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // // pressed,
-    // // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
-    // MICHALE: This setpoint means that TelopDrive will only left or write stick is
-    // pressed down. Normally we use
-    // m_drivetrain.setDefaultCommand()
-
-    // should clarify that in xbox controller left stick is a button that you can
-    // press down on to click,
-    // which is refered to here, not just that left stick is being used
-
-    // driverController.leftStick().whileTrue(new TeleopDriveCommand(drivetrain,
-    // driverController));
-    // driverController.rightStick().whileTrue(new TeleopDriveCommand(drivetrain,
-    // driverController));
+    drivetrain.setDefaultCommand(new TeleopDriveCommand(drivetrain, driverController, false));
   }
 
   /**

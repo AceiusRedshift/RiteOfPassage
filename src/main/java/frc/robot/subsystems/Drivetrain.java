@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics.SwerveDriveWheelStates;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class Drivetrain extends SubsystemBase {
@@ -84,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
         @Override
         public void periodic() {
                 SwerveModuleState[] states = getStates();
-                SwerveDriveKinematics.desaturateWheelSpeeds(states, 2);
+                SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.SwerveModuleConstants.MAX_SPEED_MS);
 
                 frontLeftSwerveModule.setTargetState(states[0]);
                 frontRightSwerveModule.setTargetState(states[1]);
