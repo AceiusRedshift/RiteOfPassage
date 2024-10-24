@@ -45,7 +45,7 @@ public class DriveToPose extends Command {
                 rPidController.calculate(currentPose.getRotation().getRadians(),
                         targetPose.getRotation().getRadians()));
 
-        drivetrain.setSpeeds(speeds);
+        drivetrain.setCurrentSpeeds(speeds);
     }
 
     @Override

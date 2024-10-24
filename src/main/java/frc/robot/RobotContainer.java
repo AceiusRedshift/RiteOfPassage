@@ -5,11 +5,15 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopDriveCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -24,7 +28,34 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-  private final Drivetrain drivetrain = new Drivetrain();
+  private final Drivetrain drivetrain = new Drivetrain(
+      new SwerveModule(SwerveModuleConstants.VELOCITY_MOTOR_ID_FL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ID_FL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_ID_FL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_OFFSET_FL,
+          new Translation2d(SwerveModuleConstants.MODULE_LOCATION_X,
+              SwerveModuleConstants.MODULE_LOCATION_Y)),
+      new SwerveModule(
+          SwerveModuleConstants.VELOCITY_MOTOR_ID_FR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ID_FR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_ID_FR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_OFFSET_FR,
+          new Translation2d(SwerveModuleConstants.MODULE_LOCATION_X,
+              -SwerveModuleConstants.MODULE_LOCATION_Y)),
+      new SwerveModule(
+          SwerveModuleConstants.VELOCITY_MOTOR_ID_BL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ID_BL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_ID_BL,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_OFFSET_BL,
+          new Translation2d(-SwerveModuleConstants.MODULE_LOCATION_X,
+              SwerveModuleConstants.MODULE_LOCATION_Y)),
+      new SwerveModule(
+          SwerveModuleConstants.VELOCITY_MOTOR_ID_BR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ID_BR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_ID_BR,
+          SwerveModuleConstants.ANGULAR_MOTOR_ENCODER_OFFSET_BR,
+          new Translation2d(-SwerveModuleConstants.MODULE_LOCATION_X,
+              -SwerveModuleConstants.MODULE_LOCATION_Y)));
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
 
