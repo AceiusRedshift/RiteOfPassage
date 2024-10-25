@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import java.util.function.Supplier;
+
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -29,6 +32,8 @@ public class SwerveModule extends SubsystemBase {
     // This one matters more and runs on
     private final CANcoder steeringEncoder;
     private final SparkPIDController steeringPidController;
+
+    private final Supplier<Double> steeringEncoderPosition;
 
     public SwerveModule(int driveMotorId, int steeringMotorId, int steeringEncoderId, double steeringEncoderOffset,
             Translation2d moduleOffset) {
@@ -99,16 +104,14 @@ public class SwerveModule extends SubsystemBase {
         steeringPidController.setPositionPIDWrappingEnabled(true);
         steeringPidController.setPositionPIDWrappingMinInput(0);
         steeringPidController.setPositionPIDWrappingMaxInput(1);
+
+        steeringEncoderPosition = steeringEncoder.getAbsolutePosition().asSupplier();
     }
 
     @Override
     public void periodic() {
         // Get the current rotations of the steering encoder
-
-        // Michael: I would create a field for getAbsolutePosition().asSupplier() and
-        // read values from the supplier to prevent having to re look at which can
-        // signal the abolute position is each time
-        final double rotations = steeringEncoder.getAbsolutePosition().refresh().getValueAsDouble();
+        final double rotations = steeringEncoderPosition.get();
 
         // Michael: mix up here, target state has the angle you want to go to, the
         // steering encoder has the actuall current angle of the wheel
