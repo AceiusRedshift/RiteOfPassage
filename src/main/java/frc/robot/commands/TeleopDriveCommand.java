@@ -29,40 +29,24 @@ public class TeleopDriveCommand extends Command {
 
     @Override
     public void execute() {
+        // Michael: 4, extra not required feature. we like to square and copy sign of
+        // rotation speed from controller to make nicer driver exsperence (better
+        // control at low speeds, quick ramp to fast speeds)
+
+        double forward = controller.getLeftY() * Constants.SwerveModuleConstants.MAX_SPEED_MS;
+        double strafe = controller.getLeftX() * -Constants.SwerveModuleConstants.MAX_SPEED_MS;
+        double rotation = controller.getRightX() * Constants.SwerveModuleConstants.MAX_SPEED_MS;
+
         if (fieldRelative) {
-            // Consider the following
-            // double rcw = pJoystick -> GetTwist();
-            // double forwrd = pJoystick -> GetY() * -1; /* Invert stick Y axis */
-            // double strafe = pJoystick -> GetX();
-
-            // float pi = 3.1415926;
-
-            // /* Adjust Joystick X/Y inputs by navX MXP yaw angle */
-
-            // double gyro_degrees = ahrs -> GetYaw();
-            // float gyro_radians = gyro_degrees * pi / 180;
-            // float temp = forwrd * cos(gyro_radians) +
-            // strafe * sin(gyro_radians);
-            // strafe = -forwrd * sin(gyro_radians) +
-            // strafe * cos(gyro_radians);
-            // fwd = temp;
-
-            /* At this point, Joystick X/Y (strafe/forwrd) vectors have been */
-            /* rotated by the gyro angle, and can be sent to drive system */
-        } else {
-            // Michael: 4, extra not required feature. we like to square and copy sign of
-            // rotation speed from controller to make nicer driver exsperence (better
-            // control at low speeds, quick ramp to fast speeds)
-
-            drivetrain.setSpeeds(new ChassisSpeeds(
-                    // I think this is the right order?
-                    controller.getLeftY() * Constants.SwerveModuleConstants.MAX_SPEED_MS,
-                    controller.getLeftX() * -Constants.SwerveModuleConstants.MAX_SPEED_MS,
-                    controller.getRightX() * Constants.SwerveModuleConstants.MAX_SPEED_MS));
+            double gyroDeg = drivetrain.getGyro().getAngle();
+            double gyroRad = gyroDeg * (Math.PI / 180);
+            double temp = (forward * Math.cos(gyroRad)) + (strafe * Math.sin(gyroRad));
+            strafe = (-forward * Math.sin(gyroRad)) + (strafe * Math.cos(gyroRad));
+            forward = temp;
         }
 
-        // just looked again and realised you might not have finsished with this since
-        // sticks are idk, but thought i would leave comments
+        // I think this is the right order?
+        drivetrain.setSpeeds(new ChassisSpeeds(forward, strafe, rotation));
 
     }
 

@@ -78,6 +78,10 @@ public class Drivetrain extends SubsystemBase {
                 return kinematics.toChassisSpeeds(kinematics.toSwerveModuleStates(currentSpeeds));
         }
 
+        public Pigeon2 getGyro() {
+                return gyro;
+        }
+
         public void stop() {
                 targetSpeeds = new ChassisSpeeds(0, 0, 0);
         }
