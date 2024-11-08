@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -26,7 +28,7 @@ public class Drivetrain extends SubsystemBase {
         private SwerveDriveOdometry odometry;
         private SwerveDrivePoseEstimator poseEstimator;
 
-        private Pigeon2 gyro;
+        private AHRS gyro;
 
         private ChassisSpeeds targetSpeeds = new ChassisSpeeds(0, 0, 0);
         private ChassisSpeeds currentSpeeds = new ChassisSpeeds(0, 0, 0);
@@ -46,6 +48,13 @@ public class Drivetrain extends SubsystemBase {
                                 backLeftSwerveModule.getOffset(),
                                 backRightSwerveModule.getOffset());
 
+                this.frontLeftSwerveModule = frontLeftSwerveModule;
+                this.frontRightSwerveModule = frontRightSwerveModule;
+                this.backLeftSwerveModule = backLeftSwerveModule;
+                this.backRightSwerveModule = backRightSwerveModule;
+
+                gyro = new AHRS();
+
                 odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), modulePositions);
 
                 poseEstimator = new SwerveDrivePoseEstimator(kinematics, gyro.getRotation2d(), modulePositions,
@@ -62,8 +71,10 @@ public class Drivetrain extends SubsystemBase {
         }
 
         private SwerveModuleState[] getStates() {
+                /// TODO: PROBMLEM!!
                 return kinematics.toSwerveModuleStates(
-                                ChassisSpeeds.discretize(targetSpeeds, Robot.kDefaultPeriod));
+                                targetSpeeds);
+                // ChassisSpeeds.discretize(targetSpeeds, Robot.kDefaultPeriod));
         }
 
         public SwerveDriveWheelStates getSwerveDriveWheelStates() {
@@ -75,10 +86,10 @@ public class Drivetrain extends SubsystemBase {
         }
 
         public ChassisSpeeds getSpeeds() {
-                return kinematics.toChassisSpeeds(kinematics.toSwerveModuleStates(currentSpeeds));
+                return kinematics.toChassisSpeeds(kinematics.toSwerveModuleStates(targetSpeeds));
         }
 
-        public Pigeon2 getGyro() {
+        public AHRS getGyro() {
                 return gyro;
         }
 
