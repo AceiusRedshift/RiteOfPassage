@@ -73,8 +73,7 @@ public class Drivetrain extends SubsystemBase {
         private SwerveModuleState[] getStates() {
                 /// TODO: PROBMLEM!!
                 return kinematics.toSwerveModuleStates(
-                                targetSpeeds);
-                // ChassisSpeeds.discretize(targetSpeeds, Robot.kDefaultPeriod));
+                                ChassisSpeeds.discretize(targetSpeeds, Robot.kDefaultPeriod));
         }
 
         public SwerveDriveWheelStates getSwerveDriveWheelStates() {
