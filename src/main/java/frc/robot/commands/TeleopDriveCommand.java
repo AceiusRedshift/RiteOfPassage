@@ -38,10 +38,6 @@ public class TeleopDriveCommand extends Command {
         double strafe = controller.getLeftX() * -Constants.SwerveModuleConstants.MAX_SPEED_MS;
         double rotation = controller.getRightX() * Constants.SwerveModuleConstants.MAX_SPEED_MS;
 
-        SmartDashboard.putNumber("F", forward);
-        SmartDashboard.putNumber("S", strafe);
-        SmartDashboard.putNumber("R", rotation);
-
         if (fieldRelative) {
             double gyroDeg = drivetrain.getGyro().getAngle();
             double gyroRad = gyroDeg * (Math.PI / 180);
@@ -49,6 +45,10 @@ public class TeleopDriveCommand extends Command {
             strafe = (-forward * Math.sin(gyroRad)) + (strafe * Math.cos(gyroRad));
             forward = temp;
         }
+
+        SmartDashboard.putNumber("F", forward);
+        SmartDashboard.putNumber("S", strafe);
+        SmartDashboard.putNumber("R", rotation);
 
         // I think this is the right order?
         drivetrain.setSpeeds(new ChassisSpeeds(forward, strafe, rotation));
