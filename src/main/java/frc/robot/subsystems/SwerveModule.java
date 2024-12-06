@@ -95,10 +95,12 @@ public class SwerveModule extends SubsystemBase {
         // Michael: also remeber that targetState.speedMetersPerSecond is in m/sec, and
         // setReference in velocity mode takes rotations/sec (RPM)
         // like how you had to convert in getMetersTraveled, but reverse
+        double targetRPM = Units.radiansToRotations(
+                targetState.speedMetersPerSecond * 60 / (Constants.SwerveModuleConstants.WHEEL_DIAMETER_METERS
+                        / 2));
+
         drivePidController.setReference(
-                Units.radiansToRotations(
-                        targetState.speedMetersPerSecond / (Constants.SwerveModuleConstants.WHEEL_DIAMETER_METERS
-                                / 2)),
+                targetRPM,
                 ControlType.kVelocity);
     }
 
